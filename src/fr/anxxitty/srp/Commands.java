@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldType;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +15,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
+
+import java.util.Iterator;
 
 public class Commands implements CommandExecutor {
 
@@ -32,6 +36,7 @@ public class Commands implements CommandExecutor {
 
             if (cmd.getName().equalsIgnoreCase("reset")) {
 
+                //Kills the dragon if the player is in the end because otherwise there's a bug with the bossbar
                 if (world.getEnvironment() == World.Environment.THE_END) {
                     for (Entity entity : world.getLivingEntities()) {
                         if (entity.getType() == EntityType.ENDER_DRAGON) {
@@ -40,6 +45,7 @@ public class Commands implements CommandExecutor {
                     }
                 }
 
+                //Regenerates the worlds
                 worldManager.deleteWorld("spworld");
                 worldManager.deleteWorld("spnether");
                 worldManager.deleteWorld("spend");
@@ -52,6 +58,7 @@ public class Commands implements CommandExecutor {
                 worldManager.getMVWorld("spnether").setRespawnToWorld("spworld");
                 worldManager.getMVWorld("spend").setRespawnToWorld("spworld");
 
+                //Teleports the player at a safe location
                 Location originalLocation = worldManager.getMVWorld("spworld").getSpawnLocation();
                 Location safeLocation = core.getSafeTTeleporter().getSafeLocation(originalLocation);
                 worldManager.getMVWorld("spworld").setSpawnLocation(safeLocation);
@@ -60,6 +67,7 @@ public class Commands implements CommandExecutor {
 
                     player.sendMessage("§3You will reset your speedrun! §6/!\\ §4Please don't move during the generation, this may crash the server §6/!\\");
 
+                    //Removes all the data about the player (potion effect, health, inventory, advancements...)
                     player.getInventory().clear();
                     player.updateInventory();
                     player.setHealth(20.0);
@@ -70,6 +78,14 @@ public class Commands implements CommandExecutor {
                     player.setExp(0);
                     player.setLevel(0);
                     player.setSaturation(20);
+
+                    Iterator<Advancement> iterator = Bukkit.getServer().advancementIterator();
+                    while (iterator.hasNext())
+                    {
+                        AdvancementProgress progress = player.getAdvancementProgress(iterator.next());
+                        for (String criteria : progress.getAwardedCriteria())
+                            progress.revokeCriteria(criteria);
+                    }
 
                     player.sendMessage("§3Generation finished !");
                     player.sendMessage("§3Teleportation...");

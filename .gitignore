@@ -6,6 +6,7 @@ dependency-reduced-pom.xml
 /dist
 /manifest.mf
 /world
+META-INF/
 
 # intellij
 *.iml

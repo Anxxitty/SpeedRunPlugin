@@ -43,6 +43,7 @@ public class SpeedRunPlugin extends JavaPlugin {
             return;
         }
 
+        // Check if the version of Multiverse-Core is correct
         if (this.core.getProtocolVersion() < requiresProtocol) {
             logger.severe("Your Multiverse-Core is OUT OF DATE");
             logger.severe("This version of SpeedRunPlugin requires Protocol Level: " + requiresProtocol);
@@ -60,11 +61,13 @@ public class SpeedRunPlugin extends JavaPlugin {
         this.spnether = worldManager.getMVWorld("spnether");
         this.spend = worldManager.getMVWorld("spend");
 
+        //Link the nether and the end to the overworld
         this.addLinks();
 
         getCommand("reset").setExecutor(new Commands(this.core));
         getServer().getPluginManager().registerEvents(this.pluginListener, this);
 
+        //Check if the worlds are created and regen them if needed
         try {
             String resetOnStarting = this.getConfig().getString("resetonstarting");
 
@@ -76,6 +79,7 @@ public class SpeedRunPlugin extends JavaPlugin {
             logger.info("The 'resetonstarting' setting is not defined or is incorrect in the configuration. Considered as false");
         }
 
+        //Unload useless worlds
         worldManager.unloadWorld("world_nether");
         worldManager.unloadWorld("world_the_end");
 
