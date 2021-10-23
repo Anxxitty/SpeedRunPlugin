@@ -1,0 +1,14 @@
+/build.xml
+/target
+dependency-reduced-pom.xml
+/build
+/bin
+/dist
+/manifest.mf
+/world
+
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea/

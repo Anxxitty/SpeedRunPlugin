@@ -10,20 +10,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
 
-public class PluginListener implements Listener {
+public class SRPListener implements Listener {
 
     private final MultiverseCore core;
-    private final Plugin plugin;
+    private final SpeedRunPlugin speedRunPlugin;
 
-    public PluginListener(MultiverseCore core,  Plugin plugin) {
+    public SRPListener(MultiverseCore core, SpeedRunPlugin speedRunPlugin) {
         this.core = core;
-        this.plugin = plugin;
+        this.speedRunPlugin = speedRunPlugin;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
-        String messageFromConfig = plugin.getConfig().getString("resetonstarting");
+        String messageFromConfig = speedRunPlugin.getConfig().getString("resetonstarting");
 
         try {
             if (messageFromConfig.equalsIgnoreCase("true")) {

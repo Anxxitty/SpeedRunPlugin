@@ -9,6 +9,8 @@ import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
@@ -26,10 +28,17 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] strings) {
         if (sender instanceof Player) {
 
+            World world = ((Player) sender).getWorld();
+
             if (cmd.getName().equalsIgnoreCase("reset")) {
 
-                if ((((Player) sender).getWorld().getEnvironment() == World.Environment.THE_END))
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kill @e[type=minecraft:ender_dragon]");
+                if (world.getEnvironment() == World.Environment.THE_END) {
+                    for (Entity entity : world.getLivingEntities()) {
+                        if (entity.getType() == EntityType.ENDER_DRAGON) {
+                            entity.remove();
+                        }
+                    }
+                }
 
                 worldManager.deleteWorld("spworld");
                 worldManager.deleteWorld("spnether");
