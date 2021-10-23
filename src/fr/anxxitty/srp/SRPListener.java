@@ -19,17 +19,17 @@ import java.util.Iterator;
 public class SRPListener implements Listener {
 
     private final MultiverseCore core;
-    private final SpeedRunPlugin speedRunPlugin;
+    private final SpeedRunPlugin SpeedRunPlugin;
 
-    public SRPListener(MultiverseCore core, SpeedRunPlugin speedRunPlugin) {
+    public SRPListener(MultiverseCore core, SpeedRunPlugin SpeedRunPlugin) {
         this.core = core;
-        this.speedRunPlugin = speedRunPlugin;
+        this.SpeedRunPlugin = SpeedRunPlugin;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
-        String resetonstarting = speedRunPlugin.getConfig().getString("resetonstarting");
+        String resetonstarting = SpeedRunPlugin.getConfig().getString("resetonstarting");
 
         try {
             //resets player data only if the map is regenerated at server startup
