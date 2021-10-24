@@ -11,6 +11,7 @@ import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -32,18 +33,11 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] strings) {
         if (sender instanceof Player) {
 
-            World world = ((Player) sender).getWorld();
-
             if (cmd.getName().equalsIgnoreCase("reset")) {
 
                 //Kills the dragon if the player is in the end because otherwise there's a bug with the bossbar
-                if (world.getEnvironment() == World.Environment.THE_END) {
-                    for (Entity entity : world.getLivingEntities()) {
-                        if (entity.getType() == EntityType.ENDER_DRAGON) {
-                            entity.remove();
-                        }
-                    }
-                }
+                //I don't like the use of dispatchCommand function so if you know an other way to do it, please let me know
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kill @e[type=minecraft:ender_dragon]");
 
                 //Regenerates the worlds
                 worldManager.deleteWorld("spworld");

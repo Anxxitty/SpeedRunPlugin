@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -38,13 +39,8 @@ public class SRPListener implements Listener {
                 Player player = event.getPlayer();
 
                 //Kills the dragon if the player is in the end because otherwise there's a bug with the bossbar
-                if (player.getWorld().getEnvironment() == World.Environment.THE_END) {
-                    for (Entity entity : player.getWorld().getLivingEntities()) {
-                        if (entity.getType() == EntityType.ENDER_DRAGON) {
-                            entity.remove();
-                        }
-                    }
-                }
+                //I don't like the usage of dispatchCommand function so if you know an other way to do it, please let me know
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kill @e[type=minecraft:ender_dragon]");
 
                 //Removes all the data about the player (potion effect, health, inventory, advancements...)
                 player.getInventory().clear();

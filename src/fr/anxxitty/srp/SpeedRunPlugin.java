@@ -32,13 +32,13 @@ public class SpeedRunPlugin extends JavaPlugin {
         this.netherPortals = (MultiverseNetherPortals) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-NetherPortals");
 
         if (this.core == null) {
-            logger.info("Multiverse-Core not found!");
+            logger.info("[SpeedRunPlugin] Multiverse-Core not found!");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
         if (this.netherPortals == null) {
-            logger.info("Multiverse-NetherPortals not found!");
+            logger.info("[SpeedRunPlugin] Multiverse-NetherPortals not found!");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -83,7 +83,7 @@ public class SpeedRunPlugin extends JavaPlugin {
         worldManager.unloadWorld("world_nether");
         worldManager.unloadWorld("world_the_end");
 
-        logger.info(" The plugin started successfully !");
+        logger.info("[SpeedRunPlugin] The plugin started successfully !");
     }
 
     private void addLinks() {
@@ -134,7 +134,7 @@ public class SpeedRunPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        logger.info(" The plugin stopped successfully !");
+        logger.info("[SpeedRunPlugin] The plugin stopped successfully !");
     }
 
 }
